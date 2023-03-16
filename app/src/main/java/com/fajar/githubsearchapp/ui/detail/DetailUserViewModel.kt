@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fajar.githubsearchapp.api.ApiService
 import com.fajar.githubsearchapp.data.model.DetailUserResponse
-import com.fajar.githubsearchapp.data.model.UserResponse
 import com.fajar.githubsearchapp.di.ApiModule
 import retrofit2.Call
 import retrofit2.Callback

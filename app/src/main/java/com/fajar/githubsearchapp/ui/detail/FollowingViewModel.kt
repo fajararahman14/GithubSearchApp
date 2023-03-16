@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.fajar.githubsearchapp.data.model.User
-import com.fajar.githubsearchapp.data.model.UserResponse
 import com.fajar.githubsearchapp.di.ApiModule
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +16,7 @@ class FollowingViewModel : ViewModel() {
 
     fun setListFollowing(user: String) {
         ApiModule.apiService
-            .getUserFollowers(user)
+            .getUserFollowing(user)
             .enqueue(object : Callback<ArrayList<User>> {
                 override fun onResponse(
                     call: Call<ArrayList<User>>,
