@@ -1,12 +1,13 @@
 package com.fajar.githubsearchapp.ui.main
 
-import android.util.Log
+
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fajar.githubsearchapp.di.ApiModule
 import com.fajar.githubsearchapp.data.model.User
 import com.fajar.githubsearchapp.data.model.UserResponse
+import com.fajar.githubsearchapp.di.ApiModule
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,6 +15,7 @@ import retrofit2.Response
 class MainViewModel : ViewModel() {
 
     val listUsers = MutableLiveData<ArrayList<User>>()
+
 
     fun setSearchUsers(query: String) {
         ApiModule.apiService
@@ -30,7 +32,7 @@ class MainViewModel : ViewModel() {
                     }
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                        t.message?.let { Log.d("Failure", it) }
+                        Toast.makeText(null, "Failed to load data", Toast.LENGTH_SHORT).show()
                     }
                 }
             )

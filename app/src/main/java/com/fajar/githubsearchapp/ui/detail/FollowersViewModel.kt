@@ -1,6 +1,6 @@
 package com.fajar.githubsearchapp.ui.detail
 
-import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +28,7 @@ class FollowersViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
-                    Log.d("Failure", t.message.toString())
+                    Toast.makeText(null, "Failed to load data", Toast.LENGTH_SHORT).show()
                 }
 
             })

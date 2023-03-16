@@ -12,13 +12,15 @@ class SectionPagerAdapter(private val mCtx: Context, fm: FragmentManager, data: 
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private var fragmentBundle: Bundle? = null
+
     init {
         fragmentBundle = data
     }
 
     @StringRes
     private val TAB_TITLES = intArrayOf(R.string.tab_followers, R.string.tab_following)
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = TAB_TITLES.size
+
 
     override fun getItem(position: Int): Fragment {
         var fragment: Fragment? = null
@@ -30,7 +32,7 @@ class SectionPagerAdapter(private val mCtx: Context, fm: FragmentManager, data: 
         return fragment as Fragment
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return mCtx.resources.getString(TAB_TITLES[position])
     }
 }

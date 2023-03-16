@@ -1,18 +1,33 @@
 package com.fajar.githubsearchapp.ui.detail
 
-import android.util.Log
+import android.app.Application
+import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.fajar.githubsearchapp.data.local.FavoriteUser
+import com.fajar.githubsearchapp.data.local.FavoriteUserDao
+import com.fajar.githubsearchapp.data.local.UserDatabase
 import com.fajar.githubsearchapp.data.model.DetailUserResponse
 import com.fajar.githubsearchapp.di.ApiModule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel : ViewModel() {
+class DetailUserViewModel(application: Application) : AndroidViewModel(application) {
 
     val user = MutableLiveData<DetailUserResponse>()
+
+    private var userDao: FavoriteUserDao? = null
+    private var userDatabase: UserDatabase? = null
+
+    init {
+        userDatabase = UserDatabase.getDatabase(application)
+        userDao = userDatabase?.favoriteUserDao()
+    }
 
     fun setUserDetail(username: String) {
         ApiModule.apiService.getUserDetail(username)
@@ -25,7 +40,7 @@ class DetailUserViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
-                    Log.d("Failure", t.message.toString())
+                    Toast.makeText(null, "Failed to load data", Toast.LENGTH_SHORT).show()
                 }
 
             })
@@ -34,5 +49,23 @@ class DetailUserViewModel : ViewModel() {
 
     fun getUserDetail(): LiveData<DetailUserResponse> {
         return user
+    }
+
+    fun insertFavoriteUser(username: String, id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val user = FavoriteUser(
+                username,
+                id
+            )
+            userDao?.insertFavoriteUser(user)
+        }
+    }
+
+    suspend fun checkUser(id: Int) = userDao?.isFavorite(id)
+
+    fun removeFavoriteUser(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            userDao?.deleteFavoriteUser(id)
+        }
     }
 }
