@@ -1,5 +1,6 @@
 package com.fajar.githubsearchapp.ui.detail
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +14,8 @@ import retrofit2.Response
 class FollowingViewModel : ViewModel() {
 
     val listFollowing = MutableLiveData<ArrayList<User>>()
+
+    val errorMessage = MutableLiveData<String>()
 
     fun setListFollowing(user: String) {
         ApiModule.apiService
@@ -28,7 +31,8 @@ class FollowingViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
-                    Toast.makeText(null, "Failed to load data", Toast.LENGTH_SHORT).show()
+                    Log.d("Failure", t.message.toString())
+                    errorMessage.postValue(t.message.toString())
                 }
 
             })

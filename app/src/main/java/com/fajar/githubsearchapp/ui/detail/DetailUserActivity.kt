@@ -51,6 +51,11 @@ class DetailUserActivity : AppCompatActivity() {
                     }
                 }
             }
+        viewModel.errorMessage.observe(this) { message ->
+            if (message != null) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        }
 
         var _isChecked = false
         CoroutineScope(Dispatchers.IO).launch {

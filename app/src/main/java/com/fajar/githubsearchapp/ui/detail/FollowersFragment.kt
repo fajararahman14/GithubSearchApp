@@ -2,6 +2,7 @@ package com.fajar.githubsearchapp.ui.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,7 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
             rvUser.layoutManager = LinearLayoutManager(activity)
             rvUser.adapter = adapter
         }
+
         showLoading(true)
         viewModel = ViewModelProvider(
             this,
@@ -44,6 +46,12 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
                 showLoading(false)
             }
         }
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            if (message != null) {
+                showLoading(false)
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -51,5 +59,7 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
         _binding = null
     }
 
-    private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE }
+    private fun showLoading(state: Boolean) {
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
+    }
 }

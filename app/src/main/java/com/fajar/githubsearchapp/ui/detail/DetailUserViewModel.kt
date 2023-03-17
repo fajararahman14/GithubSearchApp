@@ -1,6 +1,7 @@
 package com.fajar.githubsearchapp.ui.detail
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -24,6 +25,8 @@ class DetailUserViewModel(application: Application) : AndroidViewModel(applicati
     private var userDao: FavoriteUserDao? = null
     private var userDatabase: UserDatabase? = null
 
+    val errorMessage = MutableLiveData<String>()
+
     init {
         userDatabase = UserDatabase.getDatabase(application)
         userDao = userDatabase?.favoriteUserDao()
@@ -40,7 +43,8 @@ class DetailUserViewModel(application: Application) : AndroidViewModel(applicati
                 }
 
                 override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
-                    Toast.makeText(null, "Failed to load data", Toast.LENGTH_SHORT).show()
+                    Log.d("Failure", t.message.toString())
+                    errorMessage.postValue(t.message.toString())
                 }
 
             })

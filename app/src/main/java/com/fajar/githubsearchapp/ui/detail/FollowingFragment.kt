@@ -2,6 +2,7 @@ package com.fajar.githubsearchapp.ui.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +41,12 @@ class FollowingFragment : Fragment(R.layout.fragment_follow) {
             if (following != null) {
                 adapter.setList(following)
                 showLoading(false)
+            }
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            if (message != null) {
+                showLoading(false)
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             }
         }
     }

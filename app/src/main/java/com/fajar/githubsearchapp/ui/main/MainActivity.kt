@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         adapter = UserAdapter()
-        adapter.UserDiffCallback()
+        adapter.notifyDataSetChanged()
 
         adapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
+
         }
         viewModel.getSearchUsers().observe(this) { users ->
             if (users != null) {
@@ -63,9 +65,17 @@ class MainActivity : AppCompatActivity() {
                 showLoading(false)
             }
         }
+        viewModel.errorMessage.observe(this) { message ->
+            if (message != null) {
+                showLoading(false)
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
-    private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE }
+    private fun showLoading(state: Boolean) {
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
+    }
 
 
     private fun searchUsers() {

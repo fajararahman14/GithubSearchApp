@@ -1,6 +1,7 @@
 package com.fajar.githubsearchapp.ui.main
 
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +17,7 @@ class MainViewModel : ViewModel() {
 
     val listUsers = MutableLiveData<ArrayList<User>>()
 
+    val errorMessage = MutableLiveData<String>()
 
     fun setSearchUsers(query: String) {
         ApiModule.apiService
@@ -32,7 +34,8 @@ class MainViewModel : ViewModel() {
                     }
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                        Toast.makeText(null, "Failed to load data", Toast.LENGTH_SHORT).show()
+                        Log.d("Failure", t.message.toString())
+                        errorMessage.postValue(t.message.toString())
                     }
                 }
             )
