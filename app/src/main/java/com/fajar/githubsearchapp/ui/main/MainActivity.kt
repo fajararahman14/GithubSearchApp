@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                 Intent(this@MainActivity, DetailUserActivity::class.java).also {
                     it.putExtra(DetailUserActivity.EXTRA_USERNAME, data.username)
                     it.putExtra(DetailUserActivity.EXTRA_ID, data.id)
+                    it.putExtra(DetailUserActivity.EXTRA_AVATAR, data.avatar_url)
                     startActivity(it)
                 }
             }
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     private fun showLoading(state: Boolean) {

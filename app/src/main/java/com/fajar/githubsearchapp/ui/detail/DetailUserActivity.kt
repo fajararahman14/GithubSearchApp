@@ -1,11 +1,13 @@
 package com.fajar.githubsearchapp.ui.detail
 
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.fajar.githubsearchapp.databinding.ActivityDetailUserBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,12 +28,19 @@ class DetailUserActivity : AppCompatActivity() {
         var user = intent.getStringExtra(EXTRA_USERNAME)
         val id = intent.getIntExtra(EXTRA_ID, 0)
 
+        val avatarUrl = intent.getStringExtra(EXTRA_AVATAR)
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, user)
 
 
         viewModel = ViewModelProvider(this).get(DetailUserViewModel::class.java)
 
+
+        fun ImageView.loadImage(url: String?) {
+            Glide.with(this.context).load(url).apply(
+                RequestOptions().override(500, 500)
+            ).centerCrop().into(this)
+        }
         viewModel.setUserDetail(user.toString())
         viewModel.getUserDetail()
             .observe(this) {
@@ -41,13 +50,7 @@ class DetailUserActivity : AppCompatActivity() {
                         tvUsername.text = it.username
                         tvFollowing.text = "${it.following} Following"
                         tvFollowers.text = "${it.followers} Followers"
-                        Glide.with(this@DetailUserActivity)
-                            .load(it.avatar_url)
-                            .transition(
-                                DrawableTransitionOptions.withCrossFade()
-                            )
-                            .centerCrop()
-                            .into(ivProfile)
+                        ivProfile.loadImage(it.avatar_url)
                     }
                 }
             }
@@ -70,7 +73,8 @@ class DetailUserActivity : AppCompatActivity() {
                         _isChecked = false
                     }
                 } else {
-                    Toast.makeText(this@DetailUserActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetailUserActivity, "Error", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -78,7 +82,7 @@ class DetailUserActivity : AppCompatActivity() {
         binding.toggleFavorite.setOnClickListener {
             _isChecked = !_isChecked
             if (_isChecked) {
-                viewModel.insertFavoriteUser(user.toString(), id)
+                viewModel.insertFavoriteUser(user.toString(), id, avatarUrl.toString())
                 Toast.makeText(this, "Added to Favorite", Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.removeFavoriteUser(id)
@@ -91,12 +95,14 @@ class DetailUserActivity : AppCompatActivity() {
             viewPager.adapter = sectionPagerAdapter
             tabLayout.setupWithViewPager(viewPager)
         }
+
     }
 
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
         const val EXTRA_ID = "extra_id"
+        const val EXTRA_AVATAR = "extra_avatar"
     }
 
 
