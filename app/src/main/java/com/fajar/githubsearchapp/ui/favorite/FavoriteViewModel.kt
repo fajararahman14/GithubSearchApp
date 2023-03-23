@@ -16,7 +16,6 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     private var userDao: FavoriteUserDao? = null
     private var userDatabase: UserDatabase? = null
 
-    val errorMessage = MutableLiveData<String>()
 
     init {
         userDatabase = UserDatabase.getDatabase(application)

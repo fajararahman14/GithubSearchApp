@@ -12,5 +12,25 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/black</item>
+
     </style>
+
+    <style name="Tablayout">
+        <item name="tabTextColor">@color/black</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="following">
+        <item name="drawableStartCompat">@drawable/ic_following</item>
+    </style>
+
+    <style name="follower">
+        <item name="drawableStartCompat">@drawable/ic_follower</item>
+    </style>
+
+    <style name="github">
+        <item name="android:src">@drawable/icon_github</item>
+    </style>
+
 </resources>

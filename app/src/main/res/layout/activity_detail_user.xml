@@ -40,14 +40,13 @@
 
     <TextView
         android:id="@+id/tv_followers"
+        style="@style/follower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:gravity="center_vertical"
-        android:textColor="@color/black"
         android:textSize="14sp"
-        app:drawableStartCompat="@drawable/ic_people"
         app:layout_constraintEnd_toStartOf="@id/tv_following"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_username"
@@ -55,14 +54,13 @@
 
     <TextView
         android:id="@+id/tv_following"
+        style="@style/follower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
-        android:textColor="@color/black"
         android:textSize="14sp"
-        app:drawableStartCompat="@drawable/ic_people"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_followers"
         app:layout_constraintTop_toBottomOf="@id/tv_username"
@@ -70,14 +68,13 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
+        style="@style/Tablayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_followers"
-        app:tabTextColor="@color/black" />
+        app:layout_constraintTop_toBottomOf="@id/tv_followers" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
