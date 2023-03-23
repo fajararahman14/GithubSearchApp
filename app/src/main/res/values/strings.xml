@@ -7,4 +7,6 @@
     <string name="followers_count">%d Followers</string>
     <string name="favorite">Favorite</string>
     <string name="default_query">facebook</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="settings">Settings</string>
 </resources>

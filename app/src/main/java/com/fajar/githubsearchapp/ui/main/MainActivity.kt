@@ -8,7 +8,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fajar.githubsearchapp.R
 import com.fajar.githubsearchapp.adapter.UserAdapter
@@ -16,6 +21,9 @@ import com.fajar.githubsearchapp.data.model.User
 import com.fajar.githubsearchapp.databinding.ActivityMainBinding
 import com.fajar.githubsearchapp.ui.detail.DetailUserActivity
 import com.fajar.githubsearchapp.ui.favorite.FavoriteActivity
+import com.fajar.githubsearchapp.ui.setting.PreferencesKeys
+import com.fajar.githubsearchapp.ui.setting.SettingActivity
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        observeDarkMode()
 
         adapter = UserAdapter()
         adapter.notifyDataSetChanged()
@@ -108,8 +117,29 @@ class MainActivity : AppCompatActivity() {
                     startActivity(it)
                 }
             }
+            R.id.settings_menu -> {
+                Intent(this, SettingActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private val dataStore: DataStore<Preferences> by lazy {
+        applicationContext.createDataStore(name = "settings")
+
+    }
+
+    private fun observeDarkMode() {
+        lifecycleScope.launch {
+            dataStore.data.collect { settings ->
+                val isDarkMode = settings[PreferencesKeys.IS_DARK_MODE] ?: false
+                AppCompatDelegate.setDefaultNightMode(
+                    if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                )
+            }
+        }
     }
 }
 

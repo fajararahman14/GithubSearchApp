@@ -25,5 +25,6 @@ abstract class UserDatabase : RoomDatabase() {
         }
 
     }
+
     abstract fun favoriteUserDao(): FavoriteUserDao
 }

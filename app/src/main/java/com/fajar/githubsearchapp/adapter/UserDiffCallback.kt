@@ -3,7 +3,8 @@ package com.fajar.githubsearchapp.adapter
 import androidx.recyclerview.widget.DiffUtil
 import com.fajar.githubsearchapp.data.model.User
 
-class UserDiffCallback(private val oldList: List<User>, private val newList: List<User>) : DiffUtil.Callback() {
+class UserDiffCallback(private val oldList: List<User>, private val newList: List<User>) :
+    DiffUtil.Callback() {
     override fun getOldListSize() = oldList.size
 
     override fun getNewListSize() = newList.size

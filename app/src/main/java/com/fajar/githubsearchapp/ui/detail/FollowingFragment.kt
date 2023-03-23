@@ -56,5 +56,7 @@ class FollowingFragment : Fragment(R.layout.fragment_follow) {
         _binding = null
     }
 
-    private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE }
+    private fun showLoading(state: Boolean) {
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
+    }
 }

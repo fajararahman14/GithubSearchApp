@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_favorite_white"
         android:title="@string/favorite"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/settings_menu"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings"
+        app:showAsAction="always" />
 </menu>

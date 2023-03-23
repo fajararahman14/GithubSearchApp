@@ -1,8 +1,8 @@
 package com.fajar.githubsearchapp.ui.favorite
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fajar.githubsearchapp.adapter.UserAdapter
@@ -22,6 +22,8 @@ class FavoriteActivity : AppCompatActivity() {
 
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         adapter = UserAdapter()
         adapter.notifyDataSetChanged()
