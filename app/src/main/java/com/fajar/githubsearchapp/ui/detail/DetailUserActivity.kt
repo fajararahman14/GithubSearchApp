@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.fajar.githubsearchapp.R
 import com.fajar.githubsearchapp.databinding.ActivityDetailUserBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,8 +49,9 @@ class DetailUserActivity : AppCompatActivity() {
                     binding.apply {
                         tvName.text = it.name
                         tvUsername.text = it.username
-                        tvFollowing.text = "${it.following} Following"
-                        tvFollowers.text = "${it.followers} Followers"
+                        tvFollowing.text = R.string.tab_following.toString()
+                        tvFollowing.text = getString(R.string.following_count, it.following)
+                        tvFollowers.text = getString(R.string.followers_count, it.followers)
                         ivProfile.loadImage(it.avatar_url)
                     }
                 }

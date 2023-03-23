@@ -3,15 +3,19 @@ package com.fajar.githubsearchapp.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fajar.githubsearchapp.R
 import com.fajar.githubsearchapp.adapter.UserAdapter
 import com.fajar.githubsearchapp.data.model.User
 import com.fajar.githubsearchapp.databinding.ActivityMainBinding
 import com.fajar.githubsearchapp.ui.detail.DetailUserActivity
+import com.fajar.githubsearchapp.ui.favorite.FavoriteActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
+            etSearch.setText(R.string.default_query)
 
         }
         viewModel.getSearchUsers().observe(this) { users ->
@@ -72,6 +77,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
+        viewModel.setSearchUsers("facebook")
+
 
     }
 
@@ -87,6 +94,22 @@ class MainActivity : AppCompatActivity() {
             showLoading(true)
             viewModel.setSearchUsers(query)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.option_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favorite_menu -> {
+                Intent(this, FavoriteActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

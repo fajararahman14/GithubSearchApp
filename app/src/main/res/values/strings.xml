@@ -3,4 +3,8 @@
 
     <string name="tab_followers">Followers</string>
     <string name="tab_following">Following</string>
+    <string name="following_count">%d Following</string>
+    <string name="followers_count">%d Followers</string>
+    <string name="favorite">Favorite</string>
+    <string name="default_query">facebook</string>
 </resources>
